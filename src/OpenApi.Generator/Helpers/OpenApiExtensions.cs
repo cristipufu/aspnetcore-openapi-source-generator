@@ -6,20 +6,19 @@ namespace OpenApi.Generator
     {
         public static string ToCsharpType(this OpenApiSchema schema)
         {
-            var csharpType = schema.Type switch
+            if (schema.Reference != null)
+            {
+                return schema.Reference.Id;
+            }
+
+            return schema.Type switch
             {
                 "string" => "string",
                 "integer" => schema.Format == "int64" ? "long" : "int",
                 "boolean" => "bool",
+                "array" => $"List<{ToCsharpType(schema.Items)}>",
                 _ => "object",
             };
-
-            if (schema.Nullable)
-            {
-                csharpType += "?";
-            }
-
-            return csharpType;
         }
     }
 }
