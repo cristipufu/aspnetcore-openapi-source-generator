@@ -1,0 +1,11 @@
+﻿using System;
+
+namespace OpenApi.WebApi
+{
+    public class {{ className }}
+    {
+{{~ for property in properties ~}}
+        public {{ property.type }} {{ property.name }} { get; set; }
+{{~ end ~}}
+    }
+}

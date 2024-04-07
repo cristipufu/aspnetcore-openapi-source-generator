@@ -1,0 +1,17 @@
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace OpenApi.WebApi
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class {{ controllerName }}Controller : ControllerBase
+    {
+{{~ for operation in operations ~}}
+        [Http{{ operation.method }}]
+        public IActionResult {{ operation.action_name }}()
+        {
+            return Ok();
+        }
+{{~ end ~}}
+    }
+}
