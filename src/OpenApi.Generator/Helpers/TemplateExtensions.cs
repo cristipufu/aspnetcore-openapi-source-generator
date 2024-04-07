@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OpenApi.Generator
 {
-    internal static class Templates
+    internal static class TemplateExtensions
     {
         internal static string Get(string templateName)
         {

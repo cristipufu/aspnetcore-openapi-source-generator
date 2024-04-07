@@ -4,14 +4,19 @@ namespace OpenApi.WebApi
 {
     [ApiController]
     [Route("[controller]")]
-    public class {{ controllerName }}Controller : ControllerBase
+    public class {{ ControllerName }}Controller : ControllerBase
     {
-{{~ for operation in operations ~}}
-        [Http{{ operation.method }}]
-        public IActionResult {{ operation.action_name }}()
+{{~ for operation in Operations ~}}
+        [Http{{ operation.Method }}("{{ operation.Path }}")]
+        public {{ operation.ResponseType ?? "IActionResult" }} {{ operation.ActionName }}({{~ if operation.RequestBodyType ~}}[FromBody] {{ operation.RequestBodyType }} body{{ if operation.Parameters.size > 0 }},{{ end }}{{~ end ~}}{{~ for parameter in operation.Parameters ~}}[FromRoute] {{ parameter.Type }} {{ parameter.Name }}{{ if !for.last }},{{ end }}{{~ end ~}})
         {
+            {{~ if operation.ResponseType ~}}
+            return new {{ operation.ResponseType }}(); 
+            {{~ else ~}}
             return Ok();
+            {{~ end ~}}
         }
+
 {{~ end ~}}
     }
 }

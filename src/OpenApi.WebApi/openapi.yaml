@@ -18,18 +18,53 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
-  /libraries:
-    get:
-      summary: Get a list of books
+    post:
+      summary: Create a new book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '201':
+          description: Book created
+    put:
+      summary: Update a book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
       responses:
         '200':
-          description: A list of books
+          description: Book updated
+    delete:
+      summary: Delete a book
+      responses:
+        '204':
+          description: Book deleted
+  /books/{id}:
+    get:
+      summary: Get a book by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: The ID of the book to retrieve
+      responses:
+        '200':
+          description: A single book
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Book'
+                $ref: '#/components/schemas/Book'
+        '404':
+          description: Book not found
   /authors:
     get:
       summary: Get a list of authors
@@ -42,6 +77,33 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Author'
+    post:
+      summary: Create a new author
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Author'
+      responses:
+        '201':
+          description: Author created
+    put:
+      summary: Update an author
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Author'
+      responses:
+        '200':
+          description: Author updated
+    delete:
+      summary: Delete an author
+      responses:
+        '204':
+          description: Author deleted
   /publishers:
     get:
       summary: Get a list of publishers
@@ -54,6 +116,33 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Publisher'
+    post:
+      summary: Create a new publisher
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Publisher'
+      responses:
+        '201':
+          description: Publisher created
+    put:
+      summary: Update a publisher
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Publisher'
+      responses:
+        '200':
+          description: Publisher updated
+    delete:
+      summary: Delete a publisher
+      responses:
+        '204':
+          description: Publisher deleted
 components:
   schemas:
     Book:
@@ -67,17 +156,15 @@ components:
         genre:
           type: string
           example: Fantasy
-        authorId:
-          type: integer
-          format: int64
-        publisherId:
-          type: integer
-          format: int64
+        author:
+          $ref: '#/components/schemas/Author'
+        publisher:
+          $ref: '#/components/schemas/Publisher'
       required:
         - id
         - title
-        - authorId
-        - publisherId
+        - author
+        - publisher
     Author:
       type: object
       properties:
@@ -88,6 +175,10 @@ components:
           type: string
         biography:
           type: string
+        books:
+          type: array
+          items:
+            $ref: '#/components/schemas/Book'
       required:
         - id
         - name
@@ -106,6 +197,10 @@ components:
         location:
           type: string
           description: The main location of the publisher.
+        booksPublished:
+          type: array
+          items:
+            $ref: '#/components/schemas/Book'
       required:
         - id
         - name
