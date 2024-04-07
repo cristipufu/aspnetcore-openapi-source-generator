@@ -40,14 +40,9 @@ paths:
       responses:
         '200':
           description: Book updated
-    delete:
-      summary: Delete a book
-      responses:
-        '204':
-          description: Book deleted
   /books/{id}:
     get:
-      summary: Get a book by ID
+      summary: Get a book by id
       parameters:
         - in: path
           name: id
@@ -55,9 +50,24 @@ paths:
           schema:
             type: integer
             format: int64
-          description: The ID of the book to retrieve
+          description: The id of the book to retrieve
       responses:
-        '200':
+        '204':
+          description: Book deleted
+        '404':
+          description: Book not found
+    delete:
+      summary: Delete a book by id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: The id of the book to delete
+      responses:
+        '204':
           description: A single book
           content:
             application/json:
@@ -99,11 +109,41 @@ paths:
       responses:
         '200':
           description: Author updated
+  /authors/{id}:
+    get:
+      summary: Get an author by id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: The id of the author to retrieve
+      responses:
+        '200':
+          description: A single author
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
+        '404':
+          description: Author not found
     delete:
-      summary: Delete an author
+      summary: Delete an author by id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: The id of the author to delete
       responses:
         '204':
           description: Author deleted
+        '404':
+          description: Author not found
   /publishers:
     get:
       summary: Get a list of publishers
@@ -138,11 +178,41 @@ paths:
       responses:
         '200':
           description: Publisher updated
+  /publishers/{id}:
+    get:
+      summary: Get a publisher by id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: The id of the publisher to retrieve
+      responses:
+        '200':
+          description: A single publisher
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+        '404':
+          description: Publisher not found
     delete:
-      summary: Delete a publisher
+      summary: Delete a publisher by id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: The id of the publisher to delete
       responses:
         '204':
           description: Publisher deleted
+        '404':
+          description: Publisher not found
 components:
   schemas:
     Book:

@@ -37,6 +37,7 @@ namespace OpenApi.Generator
                         Parameters = op.Value.Parameters.Select(p => new { p.Name, Type = p.Schema.ToCsharpType() }).ToList(),
                         RequestBodyType = ExtractRequestBodyType(op.Value),
                         ResponseType = ExtractResponseType(op.Value),
+                        StatusCode = ExtractStatusCode(op.Value),
                         Path = path.Key
                     })
                     .ToList();
@@ -58,9 +59,14 @@ namespace OpenApi.Generator
             return path.Trim('/').Split('/')[0];
         }
 
+        private string ExtractStatusCode(OpenApiOperation operation)
+        {
+            return operation.Responses.Keys.FirstOrDefault() ?? "200";
+        }
+
         private string ExtractRequestBodyType(OpenApiOperation op)
         {
-            return op.RequestBody?.Content?.Values?.FirstOrDefault()?.Schema?.Reference?.Id?.Split('/')?.Last();
+            return op.RequestBody?.Content?.Values?.FirstOrDefault()?.Schema?.Reference?.Id;
         }
 
         private string ExtractResponseType(OpenApiOperation op)
@@ -69,10 +75,21 @@ namespace OpenApi.Generator
             {
                 var contentValue = response.Content?.Values?.FirstOrDefault();
 
-                if (contentValue != null)
+                if (contentValue == null)
                 {
-                    return contentValue.Schema?.Items?.Reference?.Id ?? contentValue.Schema?.Reference?.Id;
+                    return null;
                 }
+
+                var schema = contentValue.Schema;
+
+                if (schema.Type == "array" && schema.Items?.Reference != null)
+                {
+                    var itemType = schema.Items.Reference.Id;
+
+                    return $"List<{itemType}>";
+                }
+
+                return contentValue.Schema?.Reference?.Id;
             }
 
             return null;

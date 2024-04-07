@@ -10,10 +10,18 @@ namespace OpenApi.WebApi
         [Http{{ operation.Method }}("{{ operation.Path }}")]
         public {{ operation.ResponseType ?? "IActionResult" }} {{ operation.ActionName }}({{~ if operation.RequestBodyType ~}}[FromBody] {{ operation.RequestBodyType }} body{{ if operation.Parameters.size > 0 }},{{ end }}{{~ end ~}}{{~ for parameter in operation.Parameters ~}}[FromRoute] {{ parameter.Type }} {{ parameter.Name }}{{ if !for.last }},{{ end }}{{~ end ~}})
         {
-            {{~ if operation.ResponseType ~}}
-            return new {{ operation.ResponseType }}(); 
+            {{~ if operation.StatusCode == "201" ~}}
+            return CreatedAtAction(nameof({{ operation.ActionName }}), null, body);
             {{~ else ~}}
+                {{~ if operation.StatusCode == "204" ~}}
+            return NoContent();
+                {{~ else ~}}
+                    {{~ if operation.ResponseType ~}}
+            return new {{ operation.ResponseType }}();
+                    {{~ else ~}}
             return Ok();
+                    {{~ end ~}}
+                {{~ end ~}}
             {{~ end ~}}
         }
 
