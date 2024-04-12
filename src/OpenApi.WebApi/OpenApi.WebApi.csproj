@@ -13,12 +13,12 @@
     <ProjectReference Include="..\OpenApi.Generator\OpenApi.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
-	<ItemGroup>
-		<AdditionalFiles Include="openapi.yaml" />
-	</ItemGroup>
+  <PropertyGroup>
+    <OpenApiSpecPath>library_api.yaml</OpenApiSpecPath>
+  </PropertyGroup>
 
-	<ItemGroup>
-	  <Folder Include="Controllers\" />
-	</ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="$(OpenApiSpecPath)" />
+  </ItemGroup>
 	
 </Project>

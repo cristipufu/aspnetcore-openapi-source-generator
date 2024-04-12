@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: CreativeLibrary API
+  title: Library API
   version: 1.0.0
   description: A simple API for managing books, authors, and publishers.
 servers:

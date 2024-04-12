@@ -8,7 +8,11 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <PackageScribanIncludeSource>true</PackageScribanIncludeSource>
   </PropertyGroup>
-
+	
+  <ItemGroup>
+    <CompilerVisibleProperty Include="OpenApiSpecPath" />
+  </ItemGroup>
+	
   <ItemGroup>
     <None Remove="Templates\ControllerTemplate.scriban" />
   </ItemGroup>
