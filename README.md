@@ -1,6 +1,6 @@
 # ASP.NET Web API Source Generator
 
-Quickly set up a mock API using a Roslyn-based source generator designed to read OpenAPI specifications. By simply cloning the repository, building & running the project with a specified YAML file, you can have a fully functional mock API ready in seconds.
+Quickly set up a CRUD mock API using a Roslyn-based source generator designed to read OpenAPI specifications. Build and run the project with a specified YAML file and you will have a fully functional mock API ready in seconds.
 
 ## quick start
 
@@ -8,10 +8,9 @@ Follow these steps to get your mock API server up and running:
 
 ### step 1: clone the repository
 
-Clone this repository to your local machine using:
+Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/cristipufu/aspnetcore-openapi-source-generator.git
 cd aspnetcore-openapi-source-generator/src/OpenApi.WebApi
 ```
 ### step 2: run the project
